@@ -527,7 +527,7 @@ const htmlTemplate = (params) => `<!DOCTYPE html>
 </html>
 `;
 
-const STATIC_ASSETS_BASE = "/Users/ankit.agarwal/Documents/poc/nuxt3-starter/nuxt-starter-kit/dist" + "/" + "1638880702";
+const STATIC_ASSETS_BASE = "/Users/ankit.agarwal/Documents/poc/nuxt3-starter/nuxt-starter-kit/dist" + "/" + "1639054191";
 const PAYLOAD_JS = "/payload.js";
 const getClientManifest = cachedImport(() => import('./client.manifest.mjs'));
 const getSSRApp = cachedImport(() => import('./server.mjs'));

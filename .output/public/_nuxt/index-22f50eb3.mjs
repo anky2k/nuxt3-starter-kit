@@ -1,1 +1,0 @@
-import t from"./counter-17d331d1.mjs";import{_ as e,d as n,b as r,o as c}from"./entry-666242b0.mjs";const s=n({layout:"custom"});function _(a,p,m,d,u,f){const o=t;return c(),r(o)}var l=e(s,[["render",_]]);export{l as default};

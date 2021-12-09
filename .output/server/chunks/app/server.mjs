@@ -1,4 +1,4 @@
-import { v as vue_cjs_prod, r as require$$0, s as serverRenderer } from '../index.mjs';
+import { v as vue_cjs_prod, s as serverRenderer, r as require$$0 } from '../index.mjs';
 import 'unenv/runtime/mock/proxy';
 import 'stream';
 
@@ -238,7 +238,7 @@ const legacyPlugin = (nuxtApp) => {
   });
 };
 const NuxtPluginIndicator = "__nuxt_plugin";
-function createNuxtApp(options) {
+function createNuxtApp(options2) {
   const nuxtApp = __spreadValues({
     provide: void 0,
     globalName: "nuxt",
@@ -249,7 +249,7 @@ function createNuxtApp(options) {
     }, { serverRendered: true })),
     isHydrating: false,
     _asyncDataPromises: {}
-  }, options);
+  }, options2);
   nuxtApp.hooks = createHooks();
   nuxtApp.hook = nuxtApp.hooks.hook;
   nuxtApp.callHook = nuxtApp.hooks.callHook;
@@ -268,8 +268,8 @@ function createNuxtApp(options) {
     nuxtApp.ssrContext.payload = nuxtApp.payload;
   }
   {
-    nuxtApp.provide("config", options.ssrContext.runtimeConfig.private);
-    nuxtApp.payload.config = options.ssrContext.runtimeConfig.public;
+    nuxtApp.provide("config", options2.ssrContext.runtimeConfig.private);
+    nuxtApp.payload.config = options2.ssrContext.runtimeConfig.public;
   }
   return nuxtApp;
 }
@@ -348,9 +348,9 @@ var shared_cjs_prod = {};
 Object.defineProperty(shared_cjs_prod, "__esModule", { value: true });
 function makeMap(str, expectsLowerCase) {
   const map = Object.create(null);
-  const list = str.split(",");
-  for (let i = 0; i < list.length; i++) {
-    map[list[i]] = true;
+  const list2 = str.split(",");
+  for (let i = 0; i < list2.length; i++) {
+    map[list2[i]] = true;
   }
   return expectsLowerCase ? (val) => !!map[val.toLowerCase()] : (val) => !!map[val];
 }
@@ -928,17 +928,17 @@ function cleanupEffect(effect2) {
     deps.length = 0;
   }
 }
-function effect(fn, options) {
+function effect(fn, options2) {
   if (fn.effect) {
     fn = fn.effect.fn;
   }
   const _effect = new ReactiveEffect(fn);
-  if (options) {
-    shared.extend(_effect, options);
-    if (options.scope)
-      recordEffectScope(_effect, options.scope);
+  if (options2) {
+    shared.extend(_effect, options2);
+    if (options2.scope)
+      recordEffectScope(_effect, options2.scope);
   }
-  if (!options || !options.lazy) {
+  if (!options2 || !options2.lazy) {
     _effect.run();
   }
   const runner = _effect.run.bind(_effect);
@@ -1069,7 +1069,7 @@ function triggerEffects(dep, debuggerEventExtraInfo) {
 }
 const isNonTrackableKeys = /* @__PURE__ */ shared.makeMap(`__proto__,__v_isRef,__isVue`);
 const builtInSymbols = new Set(Object.getOwnPropertyNames(Symbol).map((key) => Symbol[key]).filter(shared.isSymbol));
-const get = /* @__PURE__ */ createGetter();
+const get$1 = /* @__PURE__ */ createGetter();
 const shallowGet = /* @__PURE__ */ createGetter(false, true);
 const readonlyGet = /* @__PURE__ */ createGetter(true);
 const shallowReadonlyGet = /* @__PURE__ */ createGetter(true, true);
@@ -1179,7 +1179,7 @@ function ownKeys(target) {
   return Reflect.ownKeys(target);
 }
 const mutableHandlers = {
-  get,
+  get: get$1,
   set,
   deleteProperty,
   has,
@@ -1203,7 +1203,7 @@ const shallowReadonlyHandlers = /* @__PURE__ */ shared.extend({}, readonlyHandle
 });
 const toShallow = (value) => value;
 const getProto = (v) => Reflect.getPrototypeOf(v);
-function get$1(target, key, isReadonly2 = false, isShallow = false) {
+function get$1$1(target, key, isReadonly2 = false, isShallow = false) {
   target = target["__v_raw"];
   const rawTarget = toRaw(target);
   const rawKey = toRaw(key);
@@ -1333,7 +1333,7 @@ function createReadonlyMethod(type) {
 function createInstrumentations() {
   const mutableInstrumentations2 = {
     get(key) {
-      return get$1(this, key);
+      return get$1$1(this, key);
     },
     get size() {
       return size(this);
@@ -1347,7 +1347,7 @@ function createInstrumentations() {
   };
   const shallowInstrumentations2 = {
     get(key) {
-      return get$1(this, key, false, true);
+      return get$1$1(this, key, false, true);
     },
     get size() {
       return size(this);
@@ -1361,7 +1361,7 @@ function createInstrumentations() {
   };
   const readonlyInstrumentations2 = {
     get(key) {
-      return get$1(this, key, true);
+      return get$1$1(this, key, true);
     },
     get size() {
       return size(this, true);
@@ -1377,7 +1377,7 @@ function createInstrumentations() {
   };
   const shallowReadonlyInstrumentations2 = {
     get(key) {
-      return get$1(this, key, true, true);
+      return get$1$1(this, key, true, true);
     },
     get size() {
       return size(this, true);
@@ -2215,17 +2215,17 @@ var vueRouter_cjs_prod = {};
   };
   const REGEX_CHARS_RE = /[.+*?^${}()[\]/\\]/g;
   function tokensToParser(segments, extraOptions) {
-    const options = assign({}, BASE_PATH_PARSER_OPTIONS, extraOptions);
+    const options2 = assign({}, BASE_PATH_PARSER_OPTIONS, extraOptions);
     const score = [];
-    let pattern = options.start ? "^" : "";
+    let pattern = options2.start ? "^" : "";
     const keys = [];
     for (const segment of segments) {
       const segmentScores = segment.length ? [] : [90];
-      if (options.strict && !segment.length)
+      if (options2.strict && !segment.length)
         pattern += "/";
       for (let tokenIndex = 0; tokenIndex < segment.length; tokenIndex++) {
         const token = segment[tokenIndex];
-        let subSegmentScore = 40 + (options.sensitive ? 0.25 : 0);
+        let subSegmentScore = 40 + (options2.sensitive ? 0.25 : 0);
         if (token.type === 0) {
           if (!tokenIndex)
             pattern += "/";
@@ -2265,17 +2265,17 @@ var vueRouter_cjs_prod = {};
       }
       score.push(segmentScores);
     }
-    if (options.strict && options.end) {
+    if (options2.strict && options2.end) {
       const i = score.length - 1;
       score[i][score[i].length - 1] += 0.7000000000000001;
     }
-    if (!options.strict)
+    if (!options2.strict)
       pattern += "/?";
-    if (options.end)
+    if (options2.end)
       pattern += "$";
-    else if (options.strict)
+    else if (options2.strict)
       pattern += "(?:/|$)";
-    const re = new RegExp(pattern, options.sensitive ? "" : "i");
+    const re = new RegExp(pattern, options2.sensitive ? "" : "i");
     function parse(path) {
       const match = path.match(re);
       const params = {};
@@ -2476,8 +2476,8 @@ var vueRouter_cjs_prod = {};
     finalizeSegment();
     return tokens;
   }
-  function createRouteRecordMatcher(record, parent, options) {
-    const parser = tokensToParser(tokenizePath(record.path), options);
+  function createRouteRecordMatcher(record, parent, options2) {
+    const parser = tokensToParser(tokenizePath(record.path), options2);
     const matcher = assign(parser, {
       record,
       parent,
@@ -2501,7 +2501,7 @@ var vueRouter_cjs_prod = {};
       const isRootAdd = !originalRecord;
       const mainNormalizedRecord = normalizeRouteRecord(record);
       mainNormalizedRecord.aliasOf = originalRecord && originalRecord.record;
-      const options = mergeOptions(globalOptions, record);
+      const options2 = mergeOptions(globalOptions, record);
       const normalizedRecords = [
         mainNormalizedRecord
       ];
@@ -2524,7 +2524,7 @@ var vueRouter_cjs_prod = {};
           const connectingSlash = parentPath[parentPath.length - 1] === "/" ? "" : "/";
           normalizedRecord.path = parent.record.path + (path && connectingSlash + path);
         }
-        matcher = createRouteRecordMatcher(normalizedRecord, parent, options);
+        matcher = createRouteRecordMatcher(normalizedRecord, parent, options2);
         if (originalRecord) {
           originalRecord.alias.push(matcher);
         } else {
@@ -2675,11 +2675,11 @@ var vueRouter_cjs_prod = {};
     return matched.reduce((meta, record) => assign(meta, record.meta), {});
   }
   function mergeOptions(defaults, partialOptions) {
-    const options = {};
+    const options2 = {};
     for (const key in defaults) {
-      options[key] = key in partialOptions ? partialOptions[key] : defaults[key];
+      options2[key] = key in partialOptions ? partialOptions[key] : defaults[key];
     }
-    return options;
+    return options2;
   }
   const HASH_RE2 = /#/g;
   const AMPERSAND_RE2 = /&/g;
@@ -2856,8 +2856,8 @@ var vueRouter_cjs_prod = {};
         if (guardType !== "beforeRouteEnter" && !record.instances[name])
           continue;
         if (isRouteComponent(rawComponent)) {
-          const options = rawComponent.__vccOpts || rawComponent;
-          const guard = options[guardType];
+          const options2 = rawComponent.__vccOpts || rawComponent;
+          const guard = options2[guardType];
           guard && guards.push(guardToPromiseFn(guard, to, from, record, name));
         } else {
           let componentPromise = rawComponent();
@@ -2866,8 +2866,8 @@ var vueRouter_cjs_prod = {};
               return Promise.reject(new Error(`Couldn't resolve component "${name}" at "${record.path}"`));
             const resolvedComponent = isESModule(resolved) ? resolved.default : resolved;
             record.components[name] = resolvedComponent;
-            const options = resolvedComponent.__vccOpts || resolvedComponent;
-            const guard = options[guardType];
+            const options2 = resolvedComponent.__vccOpts || resolvedComponent;
+            const guard = options2[guardType];
             return guard && guardToPromiseFn(guard, to, from, record, name)();
           }));
         }
@@ -2930,10 +2930,10 @@ var vueRouter_cjs_prod = {};
     useLink,
     setup(props, { slots }) {
       const link = vue.reactive(useLink(props));
-      const { options } = vue.inject(routerKey);
+      const { options: options2 } = vue.inject(routerKey);
       const elClass = vue.computed(() => ({
-        [getLinkClass(props.activeClass, options.linkActiveClass, "router-link-active")]: link.isActive,
-        [getLinkClass(props.exactActiveClass, options.linkExactActiveClass, "router-link-exact-active")]: link.isExactActive
+        [getLinkClass(props.activeClass, options2.linkActiveClass, "router-link-active")]: link.isActive,
+        [getLinkClass(props.exactActiveClass, options2.linkExactActiveClass, "router-link-exact-active")]: link.isExactActive
       }));
       return () => {
         const children = slots.default && slots.default(link);
@@ -3046,11 +3046,11 @@ var vueRouter_cjs_prod = {};
     return slotContent.length === 1 ? slotContent[0] : slotContent;
   }
   const RouterView = RouterViewImpl;
-  function createRouter(options) {
-    const matcher = createRouterMatcher(options.routes, options);
-    const parseQuery$1 = options.parseQuery || parseQuery2;
-    const stringifyQuery$1 = options.stringifyQuery || stringifyQuery2;
-    const routerHistory = options.history;
+  function createRouter(options2) {
+    const matcher = createRouterMatcher(options2.routes, options2);
+    const parseQuery$1 = options2.parseQuery || parseQuery2;
+    const stringifyQuery$1 = options2.stringifyQuery || stringifyQuery2;
+    const routerHistory = options2.history;
     const beforeGuards = useCallbacks();
     const beforeResolveGuards = useCallbacks();
     const afterGuards = useCallbacks();
@@ -3323,9 +3323,9 @@ var vueRouter_cjs_prod = {};
     let ready;
     function triggerError(error, to, from) {
       markAsReady(error);
-      const list = errorHandlers.list();
-      if (list.length) {
-        list.forEach((handler) => handler(error, to, from));
+      const list2 = errorHandlers.list();
+      if (list2.length) {
+        list2.forEach((handler) => handler(error, to, from));
       } else {
         console.error(error);
       }
@@ -3358,7 +3358,7 @@ var vueRouter_cjs_prod = {};
       hasRoute,
       getRoutes,
       resolve,
-      options,
+      options: options2,
       push,
       replace,
       go,
@@ -3454,6 +3454,82 @@ var vueRouter_cjs_prod = {};
   exports.useRouter = useRouter;
   exports.viewDepthKey = viewDepthKey;
 })(vueRouter_cjs_prod);
+const getDefault = () => null;
+function useAsyncData(key, handler, options2 = {}) {
+  var _a2, _b, _c, _d;
+  if (typeof key !== "string") {
+    throw new TypeError("asyncData key must be a string");
+  }
+  if (typeof handler !== "function") {
+    throw new TypeError("asyncData handler must be a function");
+  }
+  options2 = __spreadValues({ server: true, default: getDefault }, options2);
+  if (options2.defer) {
+    console.warn("[useAsyncData] `defer` has been renamed to `lazy`. Support for `defer` will be removed in RC.");
+  }
+  options2.lazy = (_b = (_a2 = options2.lazy) != null ? _a2 : options2.defer) != null ? _b : false;
+  const nuxt = useNuxtApp();
+  const instance = vue_cjs_prod.getCurrentInstance();
+  if (instance && !instance._nuxtOnBeforeMountCbs) {
+    const cbs = instance._nuxtOnBeforeMountCbs = [];
+    if (instance && false) {
+      vue_cjs_prod.onBeforeMount(() => {
+        cbs.forEach((cb) => {
+          cb();
+        });
+        cbs.splice(0, cbs.length);
+      });
+      vue_cjs_prod.onUnmounted(() => cbs.splice(0, cbs.length));
+    }
+  }
+  const asyncData = {
+    data: vue_cjs_prod.ref((_c = nuxt.payload.data[key]) != null ? _c : options2.default()),
+    pending: vue_cjs_prod.ref(true),
+    error: vue_cjs_prod.ref((_d = nuxt.payload._errors[key]) != null ? _d : null)
+  };
+  asyncData.refresh = (force) => {
+    if (nuxt._asyncDataPromises[key] && !force) {
+      return nuxt._asyncDataPromises[key];
+    }
+    asyncData.pending.value = true;
+    nuxt._asyncDataPromises[key] = Promise.resolve(handler(nuxt)).then((result) => {
+      if (options2.transform) {
+        result = options2.transform(result);
+      }
+      if (options2.pick) {
+        result = pick(result, options2.pick);
+      }
+      asyncData.data.value = result;
+      asyncData.error.value = null;
+    }).catch((error) => {
+      asyncData.error.value = error;
+      asyncData.data.value = options2.default();
+    }).finally(() => {
+      asyncData.pending.value = false;
+      nuxt.payload.data[key] = asyncData.data.value;
+      if (asyncData.error.value) {
+        nuxt.payload._errors[key] = true;
+      }
+      delete nuxt._asyncDataPromises[key];
+    });
+    return nuxt._asyncDataPromises[key];
+  };
+  const fetchOnServer = options2.server !== false && nuxt.payload.serverRendered;
+  if (fetchOnServer) {
+    const promise = asyncData.refresh();
+    vue_cjs_prod.onServerPrefetch(() => promise);
+  }
+  const asyncDataPromise = Promise.resolve(nuxt._asyncDataPromises[key]).then(() => asyncData);
+  Object.assign(asyncDataPromise, asyncData);
+  return asyncDataPromise;
+}
+function pick(obj, keys) {
+  const newObj = {};
+  for (const key of keys) {
+    newObj[key] = obj[key];
+  }
+  return newObj;
+}
 const suspectProtoRx = /"(?:_|\\u005[Ff])(?:_|\\u005[Ff])(?:p|\\u0070)(?:r|\\u0072)(?:o|\\u006[Ff])(?:t|\\u0074)(?:o|\\u006[Ff])(?:_|\\u005[Ff])(?:_|\\u005[Ff])"\s*:/;
 const suspectConstructorRx = /"(?:c|\\u0063)(?:o|\\u006[Ff])(?:n|\\u006[Ee])(?:s|\\u0073)(?:t|\\u0074)(?:r|\\u0072)(?:u|\\u0075)(?:c|\\u0063)(?:t|\\u0074)(?:o|\\u006[Ff])(?:r|\\u0072)"\s*:/;
 const JsonSigRx = /^["{[]|^-?[0-9][0-9.]{0,14}$/;
@@ -4028,11 +4104,11 @@ const plugin_3b9b8094 = defineNuxtPlugin((nuxtApp) => {
     [metaConfig.mixinKey]() {
       var _a2;
       const instance = vue_cjs_prod.getCurrentInstance();
-      const options = (instance == null ? void 0 : instance.type) || ((_a2 = instance == null ? void 0 : instance.proxy) == null ? void 0 : _a2.$options);
-      if (!options || !("head" in options)) {
+      const options2 = (instance == null ? void 0 : instance.type) || ((_a2 = instance == null ? void 0 : instance.proxy) == null ? void 0 : _a2.$options);
+      if (!options2 || !("head" in options2)) {
         return;
       }
-      useMeta(options.head);
+      useMeta(options2.head);
     }
   });
   for (const name in Components) {
@@ -4046,10 +4122,10 @@ const _export_sfc = (sfc, props) => {
   }
   return target;
 };
-const _sfc_main$7 = {
+const _sfc_main$h = {
   name: "NuxtChild"
 };
-function _sfc_ssrRender$7(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$f(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_RouterView = vue_cjs_prod.resolveComponent("RouterView");
   _push(serverRenderer.exports.ssrRenderComponent(_component_RouterView, _attrs, {
     default: vue_cjs_prod.withCtx(({ Component }, _push2, _parent2, _scopeId) => {
@@ -4068,13 +4144,13 @@ function _sfc_ssrRender$7(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
     _: 1
   }, _parent));
 }
-const _sfc_setup$7 = _sfc_main$7.setup;
-_sfc_main$7.setup = (props, ctx) => {
+const _sfc_setup$h = _sfc_main$h.setup;
+_sfc_main$h.setup = (props, ctx) => {
   const ssrContext = vue_cjs_prod.useSSRContext();
   (ssrContext.modules || (ssrContext.modules = new Set())).add("node_modules/nuxt3/dist/pages/runtime/child.vue");
-  return _sfc_setup$7 ? _sfc_setup$7(props, ctx) : void 0;
+  return _sfc_setup$h ? _sfc_setup$h(props, ctx) : void 0;
 };
-const NuxtChild = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["ssrRender", _sfc_ssrRender$7]]);
+const NuxtChild = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["ssrRender", _sfc_ssrRender$f]]);
 const layouts = {
   "custom": vue_cjs_prod.defineAsyncComponent({ suspensible: false, loader: () => Promise.resolve().then(function() {
     return custom$1;
@@ -4097,7 +4173,7 @@ const NuxtLayout = vue_cjs_prod.defineComponent({
     };
   }
 });
-const _sfc_main$6 = {
+const _sfc_main$g = {
   name: "NuxtPage",
   components: { NuxtLayout },
   props: {
@@ -4122,7 +4198,7 @@ const _sfc_main$6 = {
     };
   }
 };
-function _sfc_ssrRender$6(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$e(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   const _component_RouterView = vue_cjs_prod.resolveComponent("RouterView");
   const _component_NuxtLayout = vue_cjs_prod.resolveComponent("NuxtLayout");
   _push(serverRenderer.exports.ssrRenderComponent(_component_RouterView, _attrs, {
@@ -4206,13 +4282,13 @@ function _sfc_ssrRender$6(_ctx, _push, _parent, _attrs, $props, $setup, $data, $
     _: 1
   }, _parent));
 }
-const _sfc_setup$6 = _sfc_main$6.setup;
-_sfc_main$6.setup = (props, ctx) => {
+const _sfc_setup$g = _sfc_main$g.setup;
+_sfc_main$g.setup = (props, ctx) => {
   const ssrContext = vue_cjs_prod.useSSRContext();
   (ssrContext.modules || (ssrContext.modules = new Set())).add("node_modules/nuxt3/dist/pages/runtime/page.vue");
-  return _sfc_setup$6 ? _sfc_setup$6(props, ctx) : void 0;
+  return _sfc_setup$g ? _sfc_setup$g(props, ctx) : void 0;
 };
-const NuxtPage = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["ssrRender", _sfc_ssrRender$6]]);
+const NuxtPage = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["ssrRender", _sfc_ssrRender$e]]);
 const routes = [
   {
     "name": "about",
@@ -4229,7 +4305,43 @@ const routes = [
     "file": "/Users/ankit.agarwal/Documents/poc/nuxt3-starter/nuxt-starter-kit/pages/index.vue",
     "children": [],
     "component": () => Promise.resolve().then(function() {
-      return index$1;
+      return index$3;
+    })
+  },
+  {
+    "name": "list",
+    "path": "/list",
+    "file": "/Users/ankit.agarwal/Documents/poc/nuxt3-starter/nuxt-starter-kit/pages/list.vue",
+    "children": [],
+    "component": () => Promise.resolve().then(function() {
+      return list$1;
+    })
+  },
+  {
+    "name": "simple-fetch",
+    "path": "/simple-fetch",
+    "file": "/Users/ankit.agarwal/Documents/poc/nuxt3-starter/nuxt-starter-kit/pages/simple-fetch.vue",
+    "children": [],
+    "component": () => Promise.resolve().then(function() {
+      return simpleFetch;
+    })
+  },
+  {
+    "name": "simple-network-fetch",
+    "path": "/simple-network-fetch",
+    "file": "/Users/ankit.agarwal/Documents/poc/nuxt3-starter/nuxt-starter-kit/pages/simple-network-fetch.vue",
+    "children": [],
+    "component": () => Promise.resolve().then(function() {
+      return simpleNetworkFetch$1;
+    })
+  },
+  {
+    "name": "skeleton-loading",
+    "path": "/skeleton-loading",
+    "file": "/Users/ankit.agarwal/Documents/poc/nuxt3-starter/nuxt-starter-kit/pages/skeleton-loading.vue",
+    "children": [],
+    "component": () => Promise.resolve().then(function() {
+      return skeletonLoading$1;
     })
   }
 ];
@@ -4458,21 +4570,21 @@ function createFetchError(request, error, response) {
   return fetchError;
 }
 const payloadMethods = ["patch", "post", "put"];
-function setHeader(options, _key, value) {
+function setHeader(options2, _key, value) {
   const key = _key.toLowerCase();
-  options.headers = options.headers || {};
-  if ("set" in options.headers) {
-    options.headers.set(key, value);
-  } else if (Array.isArray(options.headers)) {
-    const existingHeader = options.headers.find(([header]) => header.toLowerCase() === key);
+  options2.headers = options2.headers || {};
+  if ("set" in options2.headers) {
+    options2.headers.set(key, value);
+  } else if (Array.isArray(options2.headers)) {
+    const existingHeader = options2.headers.find(([header]) => header.toLowerCase() === key);
     if (existingHeader) {
       existingHeader[1] = value;
     } else {
-      options.headers.push([key, value]);
+      options2.headers.push([key, value]);
     }
   } else {
-    const existingHeader = Object.keys(options.headers).find((header) => header.toLowerCase() === key);
-    options.headers[existingHeader || key] = value;
+    const existingHeader = Object.keys(options2.headers).find((header) => header.toLowerCase() === key);
+    options2.headers[existingHeader || key] = value;
   }
 }
 function createFetch({ fetch: fetch2 }) {
@@ -4534,15 +4646,33 @@ const getGlobal = function() {
 const fetch = getGlobal().fetch || (() => {
   return Promise.reject(new Error("[ohmyfetch] globalThis.fetch is not supported!"));
 });
-const $fetch = createFetch({ fetch });
+const $fetch$1 = createFetch({ fetch });
 if (!globalThis.$fetch) {
-  globalThis.$fetch = $fetch;
+  globalThis.$fetch = $fetch$1;
 }
 const nitroClient_465fef08 = () => {
 };
 const components = {
   "Counter": vue_cjs_prod.defineAsyncComponent(() => Promise.resolve().then(function() {
     return counter;
+  }).then((c) => c.default || c)),
+  "CardComp": vue_cjs_prod.defineAsyncComponent(() => Promise.resolve().then(function() {
+    return cardComp;
+  }).then((c) => c.default || c)),
+  "Card": vue_cjs_prod.defineAsyncComponent(() => Promise.resolve().then(function() {
+    return index$1;
+  }).then((c) => c.default || c)),
+  "CardLoader": vue_cjs_prod.defineAsyncComponent(() => Promise.resolve().then(function() {
+    return loader;
+  }).then((c) => c.default || c)),
+  "CardsList": vue_cjs_prod.defineAsyncComponent(() => Promise.resolve().then(function() {
+    return index;
+  }).then((c) => c.default || c)),
+  "CommonsLazyLoad": vue_cjs_prod.defineAsyncComponent(() => Promise.resolve().then(function() {
+    return lazyLoad;
+  }).then((c) => c.default || c)),
+  "CommonsShimmer": vue_cjs_prod.defineAsyncComponent(() => Promise.resolve().then(function() {
+    return shimmer;
   }).then((c) => c.default || c))
 };
 function components_515c5644(nuxtApp) {
@@ -4559,8 +4689,8 @@ const _plugins = [
   nitroClient_465fef08,
   components_515c5644
 ];
-const _sfc_main$5 = {};
-function _sfc_ssrRender$5(_ctx, _push, _parent, _attrs) {
+const _sfc_main$f = {};
+function _sfc_ssrRender$d(_ctx, _push, _parent, _attrs) {
   const _component_App = vue_cjs_prod.resolveComponent("App");
   serverRenderer.exports.ssrRenderSuspense(_push, {
     default: () => {
@@ -4569,33 +4699,36 @@ function _sfc_ssrRender$5(_ctx, _push, _parent, _attrs) {
     _: 1
   });
 }
-const _sfc_setup$5 = _sfc_main$5.setup;
-_sfc_main$5.setup = (props, ctx) => {
+const _sfc_setup$f = _sfc_main$f.setup;
+_sfc_main$f.setup = (props, ctx) => {
   const ssrContext = vue_cjs_prod.useSSRContext();
   (ssrContext.modules || (ssrContext.modules = new Set())).add("node_modules/nuxt3/dist/app/components/nuxt-root.vue");
-  return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
+  return _sfc_setup$f ? _sfc_setup$f(props, ctx) : void 0;
 };
-const RootComponent = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["ssrRender", _sfc_ssrRender$5]]);
-const _sfc_main$4 = {};
-function _sfc_ssrRender$4(_ctx, _push, _parent, _attrs) {
-  const _component_NuxtPage = vue_cjs_prod.resolveComponent("NuxtPage");
-  _push(`<div${serverRenderer.exports.ssrRenderAttrs(_attrs)}>`);
-  _push(serverRenderer.exports.ssrRenderComponent(_component_NuxtPage, null, null, _parent));
-  _push(`</div>`);
-}
-const _sfc_setup$4 = _sfc_main$4.setup;
-_sfc_main$4.setup = (props, ctx) => {
+const RootComponent = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["ssrRender", _sfc_ssrRender$d]]);
+const _sfc_main$e = /* @__PURE__ */ vue_cjs_prod.defineComponent({
+  __ssrInlineRender: true,
+  setup(__props) {
+    return (_ctx, _push, _parent, _attrs) => {
+      const _component_NuxtPage = vue_cjs_prod.resolveComponent("NuxtPage");
+      _push(`<div${serverRenderer.exports.ssrRenderAttrs(_attrs)}>`);
+      _push(serverRenderer.exports.ssrRenderComponent(_component_NuxtPage, null, null, _parent));
+      _push(`</div>`);
+    };
+  }
+});
+const _sfc_setup$e = _sfc_main$e.setup;
+_sfc_main$e.setup = (props, ctx) => {
   const ssrContext = vue_cjs_prod.useSSRContext();
   (ssrContext.modules || (ssrContext.modules = new Set())).add("app.vue");
-  return _sfc_setup$4 ? _sfc_setup$4(props, ctx) : void 0;
+  return _sfc_setup$e ? _sfc_setup$e(props, ctx) : void 0;
 };
-const AppComponent = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["ssrRender", _sfc_ssrRender$4]]);
 let entry;
 const plugins = normalizePlugins(_plugins);
 {
   entry = async function createNuxtAppServer(ssrContext = {}) {
     const vueApp = vue_cjs_prod.createApp(RootComponent);
-    vueApp.component("App", AppComponent);
+    vueApp.component("App", _sfc_main$e);
     const nuxt = createNuxtApp({ vueApp, ssrContext });
     await applyPlugins(nuxt, plugins);
     await nuxt.hooks.callHook("app:created", vueApp);
@@ -4603,41 +4736,41 @@ const plugins = normalizePlugins(_plugins);
   };
 }
 const entry$1 = (ctx) => entry(ctx);
-const _sfc_main$3 = {};
-function _sfc_ssrRender$3(_ctx, _push, _parent, _attrs) {
+const _sfc_main$d = {};
+function _sfc_ssrRender$c(_ctx, _push, _parent, _attrs) {
   _push(`<div${serverRenderer.exports.ssrRenderAttrs(vue_cjs_prod.mergeProps({ class: "flex flex-col w-full h-screen overflow-hidden bg-green-50" }, _attrs))}><header class="w-full h-16 bg-green-500"><nav class="flex items-center justify-center w-full h-full text-center text-black"><h2 class="text-2xl font-bold text-white">Nuxt 3</h2></nav></header><main class="flex-grow w-full h-full p-4 mx-auto max-w-7xl">`);
   serverRenderer.exports.ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
   _push(`</main><footer class="flex items-center justify-center w-full h-16 text-black"><p class="text-gray-700"> My Nuxt App \xA9 ${serverRenderer.exports.ssrInterpolate(new Date().getFullYear())}</p></footer></div>`);
 }
-const _sfc_setup$3 = _sfc_main$3.setup;
-_sfc_main$3.setup = (props, ctx) => {
+const _sfc_setup$d = _sfc_main$d.setup;
+_sfc_main$d.setup = (props, ctx) => {
   const ssrContext = vue_cjs_prod.useSSRContext();
   (ssrContext.modules || (ssrContext.modules = new Set())).add("layouts/custom.vue");
-  return _sfc_setup$3 ? _sfc_setup$3(props, ctx) : void 0;
+  return _sfc_setup$d ? _sfc_setup$d(props, ctx) : void 0;
 };
-const custom = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["ssrRender", _sfc_ssrRender$3]]);
+const custom = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["ssrRender", _sfc_ssrRender$c]]);
 const custom$1 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   "default": custom
 });
-const _sfc_main$2 = {};
-function _sfc_ssrRender$2(_ctx, _push, _parent, _attrs) {
+const _sfc_main$c = {};
+function _sfc_ssrRender$b(_ctx, _push, _parent, _attrs) {
   _push(`<div${serverRenderer.exports.ssrRenderAttrs(vue_cjs_prod.mergeProps({ class: "flex flex-col justify-center w-full h-screen max-w-3xl mx-auto space-y-2" }, _attrs))}><div><h1 class="text-2xl">About</h1><p class="text-lg">I&#39;m learning about Nuxt 3! Here&#39;s what I&#39;ve achieved so far:</p></div><ul class="mx-8 list-disc"><li> Created a new Nuxt 3 project </li><li> Added Tailwind </li><li> Created a new page </li></ul></div>`);
 }
-const _sfc_setup$2 = _sfc_main$2.setup;
-_sfc_main$2.setup = (props, ctx) => {
+const _sfc_setup$c = _sfc_main$c.setup;
+_sfc_main$c.setup = (props, ctx) => {
   const ssrContext = vue_cjs_prod.useSSRContext();
   (ssrContext.modules || (ssrContext.modules = new Set())).add("pages/about.vue");
-  return _sfc_setup$2 ? _sfc_setup$2(props, ctx) : void 0;
+  return _sfc_setup$c ? _sfc_setup$c(props, ctx) : void 0;
 };
-const about = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["ssrRender", _sfc_ssrRender$2]]);
+const about = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["ssrRender", _sfc_ssrRender$b]]);
 const about$1 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   "default": about
 });
-const _sfc_main$1 = vue_cjs_prod.defineComponent({
+const _sfc_main$b = vue_cjs_prod.defineComponent({
   setup() {
     const counter2 = vue_cjs_prod.ref(0);
     return {
@@ -4645,39 +4778,555 @@ const _sfc_main$1 = vue_cjs_prod.defineComponent({
     };
   }
 });
-function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+function _sfc_ssrRender$a(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   _push(`<div${serverRenderer.exports.ssrRenderAttrs(vue_cjs_prod.mergeProps({ class: "flex flex-col items-center justify-center h-full space-y-4 text-xl" }, _attrs))}><p>Here&#39;s a counter:</p><div class="flex items-center justify-center"><button class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700"> + </button><span class="mx-2">${serverRenderer.exports.ssrInterpolate(_ctx.counter)}</span><button class="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700"> - </button></div></div>`);
+}
+const _sfc_setup$b = _sfc_main$b.setup;
+_sfc_main$b.setup = (props, ctx) => {
+  const ssrContext = vue_cjs_prod.useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = new Set())).add("components/counter.vue");
+  return _sfc_setup$b ? _sfc_setup$b(props, ctx) : void 0;
+};
+const __nuxt_component_0$3 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["ssrRender", _sfc_ssrRender$a]]);
+const counter = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": __nuxt_component_0$3
+});
+const _sfc_main$a = vue_cjs_prod.defineComponent({
+  layout: "custom"
+});
+function _sfc_ssrRender$9(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_Counter = __nuxt_component_0$3;
+  _push(serverRenderer.exports.ssrRenderComponent(_component_Counter, _attrs, null, _parent));
+}
+const _sfc_setup$a = _sfc_main$a.setup;
+_sfc_main$a.setup = (props, ctx) => {
+  const ssrContext = vue_cjs_prod.useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = new Set())).add("pages/index.vue");
+  return _sfc_setup$a ? _sfc_setup$a(props, ctx) : void 0;
+};
+const index$2 = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["ssrRender", _sfc_ssrRender$9]]);
+const index$3 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": index$2
+});
+const _sfc_main$9 = {
+  props: ["callback"],
+  setup(props) {
+    let observer = null;
+    const trigger2 = vue_cjs_prod.ref(null);
+    const handleIntersect = (entry2) => {
+      if (entry2.isIntersecting)
+        props.callback();
+    };
+    vue_cjs_prod.onMounted(() => {
+      observer = new IntersectionObserver((entries) => {
+        handleIntersect(entries[0]);
+      }, props == null ? void 0 : props.options);
+      observer.observe(trigger2.value);
+    });
+    vue_cjs_prod.onUnmounted(() => {
+      observer.disconnect();
+    });
+    return {
+      trigger: trigger2
+    };
+  }
+};
+function _sfc_ssrRender$8(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  _push(`<div${serverRenderer.exports.ssrRenderAttrs(vue_cjs_prod.mergeProps({ ref: "trigger" }, _attrs))}>`);
+  serverRenderer.exports.ssrRenderSlot(_ctx.$slots, `LazyLoad`, {}, null, _push, _parent);
+  _push(`</div>`);
+}
+const _sfc_setup$9 = _sfc_main$9.setup;
+_sfc_main$9.setup = (props, ctx) => {
+  const ssrContext = vue_cjs_prod.useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = new Set())).add("components/commons/lazy-load.vue");
+  return _sfc_setup$9 ? _sfc_setup$9(props, ctx) : void 0;
+};
+const FetchMore = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["ssrRender", _sfc_ssrRender$8]]);
+const lazyLoad = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": FetchMore
+});
+const _sfc_main$8 = {
+  setup() {
+    let list2 = vue_cjs_prod.ref(new Array(10).fill(new Date().getTime()));
+    const loadMore = () => {
+      setTimeout(() => new Array(10).fill(new Date().getTime()).forEach((item) => list2.value.push(item)), 500);
+    };
+    return {
+      list: list2,
+      loadMore
+    };
+  },
+  components: {
+    FetchMore
+  }
+};
+function _sfc_ssrRender$7(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_FetchMore = vue_cjs_prod.resolveComponent("FetchMore");
+  _push(`<div${serverRenderer.exports.ssrRenderAttrs(vue_cjs_prod.mergeProps({ class: "w-full h-full" }, _attrs))}><ul class="m-auto"><!--[-->`);
+  serverRenderer.exports.ssrRenderList($setup.list, (item, i) => {
+    _push(`<li class="w-40 h-40 rounded-md bg-pink-400 mt-4 ml-8 text-center pt-14 border-2 border-pink-800 text-white">${serverRenderer.exports.ssrInterpolate(item)}</li>`);
+  });
+  _push(`<!--]-->`);
+  _push(serverRenderer.exports.ssrRenderComponent(_component_FetchMore, { callback: $setup.loadMore }, {
+    LazyLoad: vue_cjs_prod.withCtx((_, _push2, _parent2, _scopeId) => {
+      if (_push2) {
+        _push2(`<div class="w-40 h-40 rounded-md bg-pink-200 animate-pulse mt-4 ml-8 text-center pt-14 border-2 border-pink-400 text-white"${_scopeId}> Loading... </div>`);
+      } else {
+        return [
+          vue_cjs_prod.createVNode("div", { class: "w-40 h-40 rounded-md bg-pink-200 animate-pulse mt-4 ml-8 text-center pt-14 border-2 border-pink-400 text-white" }, " Loading... ")
+        ];
+      }
+    }),
+    _: 1
+  }, _parent));
+  _push(`</ul></div>`);
+}
+const _sfc_setup$8 = _sfc_main$8.setup;
+_sfc_main$8.setup = (props, ctx) => {
+  const ssrContext = vue_cjs_prod.useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = new Set())).add("pages/list.vue");
+  return _sfc_setup$8 ? _sfc_setup$8(props, ctx) : void 0;
+};
+const list = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["ssrRender", _sfc_ssrRender$7]]);
+const list$1 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": list
+});
+const _sfc_main$7 = {
+  __ssrInlineRender: true,
+  async setup(__props) {
+    let __temp, __restore;
+    const someFn = async () => {
+      return new Promise((resolve) => {
+        setTimeout(() => resolve({
+          "title": "Mount Everest",
+          "description": "Mount Everest is Earth's highest mountain above sea level, located in the Mahalangur Himal sub-range of the Himalayas. The China\u2013Nepal border runs across its summit point",
+          "height": "8,848 m",
+          "countries": [
+            "China",
+            "Nepal"
+          ],
+          "continent": "Asia",
+          "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Everest_kalapatthar.jpg/600px-Everest_kalapatthar.jpg"
+        }), 1e3);
+      });
+    };
+    const { data: mountain } = ([__temp, __restore] = vue_cjs_prod.withAsyncContext(() => useAsyncData("MountainApi", () => someFn(), { pick: ["title", "description"] })), __temp = await __temp, __restore(), __temp);
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<!--[--><h1>${serverRenderer.exports.ssrInterpolate(vue_cjs_prod.unref(mountain).title)}</h1><p>${serverRenderer.exports.ssrInterpolate(vue_cjs_prod.unref(mountain).description)}</p><!--]-->`);
+    };
+  }
+};
+const _sfc_setup$7 = _sfc_main$7.setup;
+_sfc_main$7.setup = (props, ctx) => {
+  const ssrContext = vue_cjs_prod.useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = new Set())).add("pages/simple-fetch.vue");
+  return _sfc_setup$7 ? _sfc_setup$7(props, ctx) : void 0;
+};
+const simpleFetch = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": _sfc_main$7
+});
+const handleError = async (res) => {
+  if (res.ok)
+    return;
+  const body = res;
+  const error = new Error(body.message || body);
+  error.statusCode = res.status;
+  error.code = body.code;
+  throw error;
+};
+const parseResponse = async (res) => {
+  if (!res.ok)
+    return handleError(res);
+  return {
+    message: res.statusText,
+    success: res.ok,
+    status: res.status,
+    headers: res.headers,
+    data: res
+  };
+};
+const options = (methodName, body, headersOpt = {}) => __spreadProps(__spreadValues({
+  method: methodName
+}, body && { body: JSON.stringify(body) }), {
+  headers: __spreadValues({
+    "accept": "application/json",
+    "content-type": "application/json"
+  }, headersOpt)
+});
+const createFetcher = (methodName) => async (url, body, headers) => {
+  let response = {};
+  try {
+    response = await $fetch(url, options(methodName, body, headers));
+    response.ok = true;
+  } catch (err) {
+    response.ok = false;
+    response = __spreadValues(__spreadValues({}, response), err);
+  }
+  return parseResponse(response);
+};
+const get = createFetcher("get");
+const fetchPosts = () => get("https://jsonplaceholder.typicode.com/posts");
+const _sfc_main$6 = vue_cjs_prod.defineComponent({
+  async setup(props) {
+    const { data, pending, error, refresh } = await useAsyncData("FetchHomePageLayout", () => fetchPosts());
+    vue_cjs_prod.onMounted(() => {
+      console.log("Component is mounted!");
+    });
+    return { data, pending, error };
+  }
+});
+function _sfc_ssrRender$6(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_content_placeholders = vue_cjs_prod.resolveComponent("content-placeholders");
+  const _component_content_placeholders_text = vue_cjs_prod.resolveComponent("content-placeholders-text");
+  _push(`<div${serverRenderer.exports.ssrRenderAttrs(_attrs)}><h1>Blog posts</h1>`);
+  if (_ctx.pending) {
+    _push(serverRenderer.exports.ssrRenderComponent(_component_content_placeholders, null, {
+      default: vue_cjs_prod.withCtx((_, _push2, _parent2, _scopeId) => {
+        if (_push2) {
+          _push2(serverRenderer.exports.ssrRenderComponent(_component_content_placeholders_text, { lines: 20 }, null, _parent2, _scopeId));
+        } else {
+          return [
+            vue_cjs_prod.createVNode(_component_content_placeholders_text, { lines: 20 })
+          ];
+        }
+      }),
+      _: 1
+    }, _parent));
+  } else if (_ctx.error) {
+    _push(`<p>Error while fetching posts: ${serverRenderer.exports.ssrInterpolate(_ctx.error)}</p>`);
+  } else {
+    _push(`<ul><!--[-->`);
+    serverRenderer.exports.ssrRenderList(_ctx.data.data, (post) => {
+      _push(`<li>${serverRenderer.exports.ssrInterpolate(post.title)}</li>`);
+    });
+    _push(`<!--]--></ul>`);
+  }
+  _push(`</div>`);
+}
+const _sfc_setup$6 = _sfc_main$6.setup;
+_sfc_main$6.setup = (props, ctx) => {
+  const ssrContext = vue_cjs_prod.useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = new Set())).add("pages/simple-network-fetch.vue");
+  return _sfc_setup$6 ? _sfc_setup$6(props, ctx) : void 0;
+};
+const simpleNetworkFetch = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["ssrRender", _sfc_ssrRender$6]]);
+const simpleNetworkFetch$1 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": simpleNetworkFetch
+});
+const _sfc_main$5 = {
+  name: "Shimmer",
+  props: {
+    animation: {
+      type: [String, Boolean],
+      default: "wave",
+      validator: (val) => ["wave", false].includes(val)
+    },
+    h: {
+      type: String,
+      default: "20px"
+    },
+    isLoaded: {
+      type: Boolean,
+      default: false
+    },
+    m: {
+      type: String,
+      default: "0px"
+    },
+    rep: {
+      type: Number,
+      default: 1
+    },
+    radius: {
+      type: String,
+      default: "4px"
+    },
+    skeletonClass: {
+      type: String,
+      default: ""
+    },
+    transition: {
+      type: Boolean,
+      default: true
+    },
+    w: {
+      type: String,
+      default: "100%"
+    }
+  },
+  computed: {
+    componentClass() {
+      return [
+        this.skeletonClass,
+        "skeleton",
+        this.animation ? `skeleton--${this.animation}` : null
+      ];
+    },
+    componentStyle() {
+      return {
+        width: this.w,
+        height: this.h,
+        borderRadius: this.radius,
+        margin: this.m
+      };
+    }
+  }
+};
+function _sfc_ssrRender$5(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  _push(`<span${serverRenderer.exports.ssrRenderAttrs(_attrs)} data-v-af588b7e><!--[-->`);
+  serverRenderer.exports.ssrRenderList($props.rep, (index2) => {
+    _push(`<span class="${serverRenderer.exports.ssrRenderClass($options.componentClass)}" style="${serverRenderer.exports.ssrRenderStyle($options.componentStyle)}" data-v-af588b7e></span>`);
+  });
+  _push(`<!--]--></span>`);
+}
+const _sfc_setup$5 = _sfc_main$5.setup;
+_sfc_main$5.setup = (props, ctx) => {
+  const ssrContext = vue_cjs_prod.useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = new Set())).add("components/commons/shimmer.vue");
+  return _sfc_setup$5 ? _sfc_setup$5(props, ctx) : void 0;
+};
+const Shimmer = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["ssrRender", _sfc_ssrRender$5], ["__scopeId", "data-v-af588b7e"]]);
+const shimmer = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": Shimmer
+});
+const _sfc_main$4 = {
+  name: "CardLoader",
+  components: {
+    Shimmer
+  }
+};
+function _sfc_ssrRender$4(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_shimmer = vue_cjs_prod.resolveComponent("shimmer");
+  _push(`<div${serverRenderer.exports.ssrRenderAttrs(vue_cjs_prod.mergeProps({ class: "flex flex-col mb-6 w-full max-w-sm bg-white rounded-2xl overflow-hidden lg:flex-row lg:mb-16 lg:mx-auto lg:max-w-screen-lg lg:h-96" }, _attrs))}>`);
+  _push(serverRenderer.exports.ssrRenderComponent(_component_shimmer, {
+    animation: false,
+    "skeleton-class": "w-full h-56 w-36 lg:w-96 lg:h-96",
+    w: null,
+    h: null,
+    radius: "0px"
+  }, null, _parent));
+  _push(`<div class="relative flex-1 p-6 pb-12 lg:p-8"><div class="flex justify-between mb-3 lg:mb-6">`);
+  _push(serverRenderer.exports.ssrRenderComponent(_component_shimmer, {
+    "skeleton-class": "w-28 mr-3 h-4 lg:h-7",
+    w: null,
+    h: null
+  }, null, _parent));
+  _push(serverRenderer.exports.ssrRenderComponent(_component_shimmer, {
+    "skeleton-class": "w-24 h-4 lg:h-7",
+    w: null,
+    h: null
+  }, null, _parent));
+  _push(`</div><div class="flex flex-col">`);
+  _push(serverRenderer.exports.ssrRenderComponent(_component_shimmer, {
+    "skeleton-class": "w-full h-7 lg:h-9",
+    class: "mb-3",
+    w: null,
+    h: null
+  }, null, _parent));
+  _push(serverRenderer.exports.ssrRenderComponent(_component_shimmer, {
+    class: "mb-6",
+    "skeleton-class": "w-full h-3 lg:h-5",
+    w: null,
+    h: null,
+    m: "0 0 8px 0",
+    rep: 4
+  }, null, _parent));
+  _push(`</div><div class="absolute bottom-0 left-0 flex items-center justify-between pb-6 px-6 w-full lg:px-8"><div class="flex items-center text-center">`);
+  _push(serverRenderer.exports.ssrRenderComponent(_component_shimmer, {
+    "skeleton-class": "w-8 h-8 lg:w-11 lg:h-11",
+    w: null,
+    h: null,
+    radius: "100%",
+    class: "mr-3"
+  }, null, _parent));
+  _push(serverRenderer.exports.ssrRenderComponent(_component_shimmer, {
+    "skeleton-class": "w-16 h-4 lg:h-7 lg:w-28 lg:mr-3",
+    w: null,
+    h: null
+  }, null, _parent));
+  _push(`</div>`);
+  _push(serverRenderer.exports.ssrRenderComponent(_component_shimmer, {
+    "skeleton-class": "w-16 h-4 lg:h-7 lg:w-28",
+    w: null,
+    h: null
+  }, null, _parent));
+  _push(`</div></div></div>`);
+}
+const _sfc_setup$4 = _sfc_main$4.setup;
+_sfc_main$4.setup = (props, ctx) => {
+  const ssrContext = vue_cjs_prod.useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = new Set())).add("components/card/loader.vue");
+  return _sfc_setup$4 ? _sfc_setup$4(props, ctx) : void 0;
+};
+const __nuxt_component_0$2 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["ssrRender", _sfc_ssrRender$4]]);
+const loader = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": __nuxt_component_0$2
+});
+const _sfc_main$3 = {
+  name: "CardComp",
+  props: ["item"]
+};
+function _sfc_ssrRender$3(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  _push(`<div${serverRenderer.exports.ssrRenderAttrs(vue_cjs_prod.mergeProps({ class: "border-indigo-800 border-2 flex flex-col mb-6 w-full max-w-sm bg-white rounded-2xl overflow-hidden lg:flex-row lg:mb-16 lg:mx-auto lg:max-w-screen-lg lg:h-96" }, _attrs))}><div class="flex items-center justify-center w-full h-56 lg:max-w-sm lg:h-96" style="${serverRenderer.exports.ssrRenderStyle({
+    background: $props.item.bgColor
+  })}"><img class="max-w-full"${serverRenderer.exports.ssrRenderAttr("src", $props.item.thumbnail)} alt="some image"></div><div class="relative flex-1 p-6 pb-12 lg:p-8"><div class="flex justify-between mb-3 lg:mb-6"><div class="text-gray-500 font-body text-xs font-semibold uppercase lg:text-xl">${serverRenderer.exports.ssrInterpolate($props.item.tag)}</div><div class="text-gray-500 font-body text-xs lg:text-xl">${serverRenderer.exports.ssrInterpolate($props.item.date)}</div></div><div class="flex flex-col"><div class="h mb-1 font-title text-xl lg:mb-4 lg:text-4xl">${serverRenderer.exports.ssrInterpolate($props.item.title)}</div><div class="mb-6 text-gray-900 font-body text-sm lg:text-lg">${serverRenderer.exports.ssrInterpolate($props.item.desc)}</div></div><div class="absolute bottom-0 left-0 flex items-center justify-between pb-6 px-6 w-full lg:px-8"><div class="flex items-center text-center"><div style="${serverRenderer.exports.ssrRenderStyle({
+    backgroundImage: `url(${$props.item.avatar})`
+  })}" class="mr-3 w-8 h-8 bg-cover bg-center rounded-full lg:w-11 lg:h-11"></div><div class="text-blue-500 text-xs font-semibold lg:text-xl">${serverRenderer.exports.ssrInterpolate($props.item.author)}</div></div><div class="flex items-center"><div class="mr-1 text-blue-500 text-xs font-semibold lg:text-xl"> Read More </div><svg width="24" height="24" viewBox="0 0 24 24" fill="#3b82f6" xmlns="http://www.w3.org/2000/svg"><path d="M16.17 13L12.59 16.59L14 18L20 12L14 6L12.59 7.41L16.17 11H4V13H16.17Z" fill="#3b82f6"></path></svg></div></div></div></div>`);
+}
+const _sfc_setup$3 = _sfc_main$3.setup;
+_sfc_main$3.setup = (props, ctx) => {
+  const ssrContext = vue_cjs_prod.useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = new Set())).add("components/card/card-comp.vue");
+  return _sfc_setup$3 ? _sfc_setup$3(props, ctx) : void 0;
+};
+const __nuxt_component_1 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["ssrRender", _sfc_ssrRender$3]]);
+const cardComp = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": __nuxt_component_1
+});
+const _sfc_main$2 = {
+  name: "Card",
+  components: {
+    CardComp: __nuxt_component_1,
+    CardLoader: __nuxt_component_0$2
+  },
+  mounted() {
+    console.log("inside card component", this.item, this.fetchState);
+  },
+  props: ["item", "fetchState"]
+};
+function _sfc_ssrRender$2(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_CardLoader = __nuxt_component_0$2;
+  const _component_CardComp = __nuxt_component_1;
+  _push(`<div${serverRenderer.exports.ssrRenderAttrs(_attrs)}>`);
+  if ($props.fetchState === "pending") {
+    _push(`<div>`);
+    _push(serverRenderer.exports.ssrRenderComponent(_component_CardLoader, null, null, _parent));
+    _push(`</div>`);
+  } else if ($props.fetchState === "failed") {
+    _push(`<div> some error </div>`);
+  } else {
+    _push(`<div>`);
+    _push(serverRenderer.exports.ssrRenderComponent(_component_CardComp, {
+      item: $props.item[0]
+    }, null, _parent));
+    _push(`</div>`);
+  }
+  _push(`</div>`);
+}
+const _sfc_setup$2 = _sfc_main$2.setup;
+_sfc_main$2.setup = (props, ctx) => {
+  const ssrContext = vue_cjs_prod.useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = new Set())).add("components/card/index.vue");
+  return _sfc_setup$2 ? _sfc_setup$2(props, ctx) : void 0;
+};
+const __nuxt_component_0$1 = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["ssrRender", _sfc_ssrRender$2]]);
+const index$1 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": __nuxt_component_0$1
+});
+const _sfc_main$1 = {
+  name: "CardList",
+  components: {
+    Card: __nuxt_component_0$1
+  },
+  props: ["data", "fetchState"]
+};
+function _sfc_ssrRender$1(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
+  const _component_Card = __nuxt_component_0$1;
+  _push(`<div${serverRenderer.exports.ssrRenderAttrs(vue_cjs_prod.mergeProps({ class: "flex flex-wrap justify-around p-4 lg:p-16" }, _attrs))}><!--[-->`);
+  serverRenderer.exports.ssrRenderList($props.data, (item, i) => {
+    _push(serverRenderer.exports.ssrRenderComponent(_component_Card, {
+      key: i,
+      item,
+      fetchState: $props.fetchState
+    }, null, _parent));
+  });
+  _push(`<!--]--></div>`);
 }
 const _sfc_setup$1 = _sfc_main$1.setup;
 _sfc_main$1.setup = (props, ctx) => {
   const ssrContext = vue_cjs_prod.useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = new Set())).add("components/counter.vue");
+  (ssrContext.modules || (ssrContext.modules = new Set())).add("components/cards-list/index.vue");
   return _sfc_setup$1 ? _sfc_setup$1(props, ctx) : void 0;
 };
 const __nuxt_component_0 = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["ssrRender", _sfc_ssrRender$1]]);
-const counter = /* @__PURE__ */ Object.freeze({
+const index = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   "default": __nuxt_component_0
 });
-const _sfc_main = vue_cjs_prod.defineComponent({
-  layout: "custom"
-});
+const wait = (delay) => new Promise((resolve) => setTimeout(() => resolve(true), delay));
+async function getSampleData() {
+  await wait(3e3);
+  return Promise.resolve({
+    items: [
+      {
+        thumbnail: "https://picsum.photos/320/200",
+        avatar: "https://picsum.photos/50/50",
+        bgColor: "#BCD1FF",
+        tag: "PRODUCTIVITY",
+        date: "3 days ago",
+        title: "7 Skills of Highly Effective Programmers",
+        desc: "Our team was inspired by the seven skills of highly effective programmers created by the TechLead. We wanted to provide our own take on the topic. Here are our seven...",
+        author: "Glen Williams"
+      }
+    ]
+  });
+}
+const _sfc_main = {
+  name: "SkeletonLoading",
+  components: {
+    CardsList: __nuxt_component_0
+  },
+  setup() {
+    const data = vue_cjs_prod.ref([1]);
+    const fetchState = vue_cjs_prod.ref("pending");
+    vue_cjs_prod.onMounted(async () => {
+      const resp = await getSampleData();
+      data.value = resp;
+      fetchState.value = "success";
+    });
+    return { data, fetchState };
+  }
+};
 function _sfc_ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
-  const _component_Counter = __nuxt_component_0;
-  _push(serverRenderer.exports.ssrRenderComponent(_component_Counter, _attrs, null, _parent));
+  const _component_CardsList = __nuxt_component_0;
+  _push(serverRenderer.exports.ssrRenderComponent(_component_CardsList, vue_cjs_prod.mergeProps({
+    data: $setup.data,
+    fetchState: $setup.fetchState
+  }, _attrs), null, _parent));
 }
 const _sfc_setup = _sfc_main.setup;
 _sfc_main.setup = (props, ctx) => {
   const ssrContext = vue_cjs_prod.useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = new Set())).add("pages/index.vue");
+  (ssrContext.modules || (ssrContext.modules = new Set())).add("pages/skeleton-loading.vue");
   return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
 };
-const index = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
-const index$1 = /* @__PURE__ */ Object.freeze({
+const skeletonLoading = /* @__PURE__ */ _export_sfc(_sfc_main, [["ssrRender", _sfc_ssrRender]]);
+const skeletonLoading$1 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
-  "default": index
+  "default": skeletonLoading
 });
 
 export { entry$1 as default };

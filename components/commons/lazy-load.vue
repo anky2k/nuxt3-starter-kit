@@ -12,7 +12,6 @@
         setup(props){
           let observer = null
           const trigger = ref(null)
-
           const handleIntersect = (entry) => {
             if (entry.isIntersecting) props.callback()
           }
@@ -29,7 +28,7 @@
           })
 
           return {
-              trigger
+            trigger
           }
         }                        
     }
