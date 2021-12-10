@@ -1,6 +1,6 @@
-export function useLoadedFlag () {
-  const loaded = useState('comp-loaded', () => false)
-  const error = useState('comp-error', () => false)
+export function useLoadedFlag (id) {
+  const loaded = useState(`comp-loaded-${id}`, () => false)
+  const error = useState(`comp-error-${id}`, () => false)
 
   const setLoaded = () => loaded.value = !loaded.value
 
