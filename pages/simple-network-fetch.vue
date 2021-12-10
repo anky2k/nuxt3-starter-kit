@@ -3,9 +3,7 @@
     <h1>Blog posts</h1>
     
     <template v-if="pending">
-      <content-placeholders>
-        <content-placeholders-text :lines="20" />
-      </content-placeholders>
+      <p>loading...</p>
     </template>
 
     <template v-else-if="error">
@@ -14,7 +12,7 @@
 
     <template v-else>      
       <ul>
-        <li v-for="post of data.data" :key="post.id">          
+        <li v-for="post of posts" :key="post.id">          
           {{ post.title }}
         </li>        
       </ul>
@@ -28,12 +26,23 @@
 import { fetchPosts } from '../sources/fetch-posts'
 
 export default defineComponent({
-  async setup (props) {
-    const { data, pending, error, refresh } = await useAsyncData('FetchHomePageLayout', () => fetchPosts())    
+  async setup (props) {   
+    const posts = ref([]) 
     onMounted(() => {
-      console.log('Component is mounted!')
+      setTimeout(() => {
+        new Array(5).fill(1).forEach( item => {
+          posts.value.push({
+              userId: item,
+              id: item,
+              title: `random text - ${new Date()}`
+          })
+        })
+      }, 2000)      
     })
-    return { data, pending, error }    
+
+    const { data, pending, error, refresh } = await useAsyncData('FetchPosts', () => fetchPosts())    
+    posts.value = data.value.data
+    return { posts, pending, error }    
   }
 })
 </script>
