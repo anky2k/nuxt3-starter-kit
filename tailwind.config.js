@@ -12,7 +12,7 @@ module.exports = {
     "./nuxt.config.{js,ts}",
   ],
   presets: [],
-  darkMode: false, // or 'media' or 'class'
+  media: false, // or 'media' or 'class'
   theme: {
     screens: {
       sm: '640px',
@@ -27,7 +27,7 @@ module.exports = {
 
       black: colors.black,
       white: colors.white,
-      gray: colors.coolGray,
+      gray: colors.gray,
       red: colors.red,
       yellow: colors.amber,
       green: colors.emerald,
@@ -976,5 +976,7 @@ module.exports = {
     wordBreak: ['responsive'],
     zIndex: ['responsive', 'focus-within', 'focus'],
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar-hide')
+  ]
 }
