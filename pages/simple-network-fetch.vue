@@ -28,6 +28,7 @@ import { fetchPosts } from '../sources/fetch-posts'
 export default defineComponent({
   async setup (props) {   
     const posts = ref([]) 
+    // if setup function is async all life cycle events have to be registered before we call await
     onMounted(() => {
       setTimeout(() => {
         new Array(5).fill(1).forEach( item => {
